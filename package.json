@@ -1,0 +1,41 @@
+{
+  "name": "nudge-app",
+  "version": "1.0.0",
+  "description": "Transform the challenging journey of building healthy habits into a gentle, encouraging, and sustainable experience through personalized nudges",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "keywords": [
+    "wellness",
+    "habits",
+    "health",
+    "nutrition",
+    "mindful-eating",
+    "habit-tracker",
+    "ai-coach"
+  ],
+  "author": "Nicole DiCochea",
+  "license": "ISC",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/nudge-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/nudge-app/issues"
+  },
+  "homepage": "https://github.com/yourusername/nudge-app#readme"
+}
