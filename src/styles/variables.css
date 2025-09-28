@@ -1,0 +1,155 @@
+/* CSS Custom Properties for Reusable Design System */
+
+:root {
+  /* Plate Colors - Background sections */
+  --plate-protein-bg: #D88A8A;
+  --plate-veggie-bg: #B1C9A9;
+  --plate-carb-bg: #F1C77F;
+  --plate-fat-bg: #AAD0DD;
+  
+  /* Portion Colors - Individual portions */
+  --portion-protein: #BF5E5E;
+  --portion-veggie: #7B9B5B;
+  --portion-carb: #D9B458;
+  --portion-fat: #7AA7BE;
+  
+  /* Section Text Colors */
+  --text-protein: #704040;
+  --text-veggie: #5F6B4F;
+  --text-carb: #A3894A;
+  --text-fat: #5F7A87;
+  
+  /* Plate styling */
+  --plate-border-radius: 0.5rem;
+  --plate-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --plate-border: 2px solid #e5e7eb;
+  
+  /* Portion styling */
+  --portion-border-radius: 0.5rem;
+  --portion-min-size: 3rem;
+  --portion-hover-scale: 1.05;
+  --portion-transition: transform 0.2s ease;
+  
+  /* Typography */
+  --text-primary: #000000;
+  --text-secondary: #555555;
+  --text-white: #ffffff;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Utility classes for plate sections */
+.plate-section-protein {
+  background-color: var(--plate-protein-bg);
+}
+
+.plate-section-veggie {
+  background-color: var(--plate-veggie-bg);
+}
+
+.plate-section-carb {
+  background-color: var(--plate-carb-bg);
+}
+
+.plate-section-fat {
+  background-color: var(--plate-fat-bg);
+}
+
+/* Utility classes for portion colors */
+.portion-protein {
+  background-color: var(--portion-protein);
+}
+
+.portion-veggie {
+  background-color: var(--portion-veggie);
+}
+
+.portion-carb {
+  background-color: var(--portion-carb);
+}
+
+.portion-fat {
+  background-color: var(--portion-fat);
+}
+
+/* Utility classes for section text colors */
+.text-protein {
+  color: var(--text-protein);
+}
+
+.text-veggie {
+  color: var(--text-veggie);
+}
+
+.text-carb {
+  color: var(--text-carb);
+}
+
+.text-fat {
+  color: var(--text-fat);
+}
+
+/* Base plate styling */
+.plate-base {
+  border-radius: var(--plate-border-radius);
+  box-shadow: var(--plate-shadow);
+  border: var(--plate-border);
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+/* Base portion styling */
+.portion-base {
+  min-width: var(--portion-min-size);
+  height: var(--portion-min-size);
+  border-radius: var(--portion-border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-white);
+  font-weight: 500;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: var(--portion-transition);
+  border: none;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  box-shadow: var(--shadow-sm);
+}
+
+.portion-base:hover {
+  transform: scale(var(--portion-hover-scale));
+  box-shadow: var(--shadow-md);
+}
+
+/* Plate portion styling - white text, no border, column layout */
+.portion-added {
+  min-width: var(--portion-min-size);
+  height: var(--portion-min-size);
+  border-radius: var(--portion-border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-white);
+  font-weight: 500;
+  font-size: 0.625rem;
+  cursor: pointer;
+  transition: var(--portion-transition);
+  border: none;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  box-shadow: var(--shadow-sm);
+}
+
+.portion-added:hover {
+  transform: scale(var(--portion-hover-scale));
+  box-shadow: var(--shadow-md);
+}

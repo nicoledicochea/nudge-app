@@ -1,88 +1,180 @@
-.plate-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+/* Import variables for consistent styling */
+@import './variables.css';
+
+/* Main plate container with realistic plate appearance */
+.plate-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: var(--spacing-md);
 }
 
-.category-section {
+/* Square plate design */
+.plate-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f1f3f4 100%);
+  box-shadow: 
+    inset 0 0 0 2px #e5e7eb,
+    0 8px 25px -5px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border: 2px solid #d1d5db;
+  overflow: hidden;
+}
+
+/* Plate inner border effect */
+.plate-visual::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+}
+
+/* Grid layout for plate sections */
+.plate-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 3px;
+  padding: 6px;
+  align-items: stretch;
+}
+
+/* Individual plate sections */
+.plate-section {
+  position: relative;
+  border-radius: 8px;
+  padding: var(--spacing-xs);
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: all 0.2s ease;
+  height: 100%;
+  box-sizing: border-box;
+  clip-path: inset(0 round 8px);
+}
+
+.plate-section:hover {
+  transform: scale(1.02);
+  z-index: 1;
+}
+
+/* Category labels positioned at the top of each quadrant */
+.category-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding: var(--spacing-xs); */
+  flex-shrink: 0;
+  /* background-color: rgba(255, 255, 255, 0.9); */
+  border-radius: 8px 8px 0 0;
 }
 
 .category-title {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #000000;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2px 8px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
 }
 
-.plate-section {
-  border-radius: 0.5rem;
-  min-height: 120px;
-  padding: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+/* Category-specific text colors */
+.category-section.protein .category-title {
+  color: var(--text-protein);
 }
 
-/* Category background colors */
-.protein-section {
-  background-color: #D88A8A;
+.category-section.veggie .category-title {
+  color: var(--text-veggie);
 }
 
-.veggie-section {
-  background-color: #B1C9A9;
+.category-section.carb .category-title {
+  color: var(--text-carb);
 }
 
-.carb-section {
-  background-color: #F1C77F;
+.category-section.fat .category-title {
+  color: var(--text-fat);
 }
 
-.fat-section {
-  background-color: #AAD0DD;
-}
-
+/* Empty state styling */
 .empty-state {
-  color: #555555;
-  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
   font-style: italic;
   align-self: center;
+  justify-self: center;
+  opacity: 0.7;
+  text-align: center;
+  width: 100%;
 }
 
-.portion-added {
-  min-width: 3rem;
-  height: 3rem;
-  border-radius: 0.5rem;
+/* Portion container for flex layout */
+.portion-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 500;
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: transform 0.2s;
-  border: none;
-  flex-direction: column;
-  gap: 0.25rem;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  align-content: flex-start;
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-xs) 0;
+  /* Modern, clean approach - hide scrollbars */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.portion-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* Portion styling for plate */
+.portion-added {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  max-width: calc(50% - var(--spacing-xs) / 2);
 }
 
 .portion-added:hover {
-  transform: scale(1.05);
+  z-index: 3;
 }
 
-/* Portion colors by category */
-.protein-portion {
-  background-color: #BF5E5E;
+/* Section-specific styling using CSS variables */
+.protein-section {
+  background: linear-gradient(135deg, var(--plate-protein-bg) 0%, rgba(216, 138, 138, 0.8) 100%);
 }
 
-.veggie-portion {
-  background-color: #7B9B5B;
+.veggie-section {
+  background: linear-gradient(135deg, var(--plate-veggie-bg) 0%, rgba(177, 201, 169, 0.8) 100%);
 }
 
-.carb-portion {
-  background-color: #D9B458;
+.carb-section {
+  background: linear-gradient(135deg, var(--plate-carb-bg) 0%, rgba(241, 199, 127, 0.8) 100%);
 }
 
-.fat-portion {
-  background-color: #7AA7BE;
+.fat-section {
+  background: linear-gradient(135deg, var(--plate-fat-bg) 0%, rgba(170, 208, 221, 0.8) 100%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .plate-container {
+    max-width: 300px;
+    padding: var(--spacing-sm);
+  }
 }

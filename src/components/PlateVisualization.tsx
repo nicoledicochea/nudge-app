@@ -26,40 +26,50 @@ const PlateVisualization: React.FC<PlateVisualizationProps> = ({
 
 
   return (
-    <div className="plate-grid">
-      {categories.map((category) => {
-        const categoryPortions = getPortionsForCategory(category.key);
-        
-        return (
-          <div key={category.key} className="category-section">
-            <h3 className="category-title">
-              {category.label}
-            </h3>
-            <div
-              data-testid={`${category.key}-section`}
-              className={`plate-section ${category.key}-section`}
-            >
-              {categoryPortions.length === 0 ? (
-                <div className="empty-state">
-                  Add portions here
+    <div className="plate-container">
+      <div className="plate-visual">
+        <div className="plate-grid">
+          {categories.map((category) => {
+            const categoryPortions = getPortionsForCategory(category.key);
+            
+            return (
+              <div
+                key={category.key}
+                data-testid={`${category.key}-section`}
+                className={`plate-section ${category.key}-section`}
+              >
+                {/* Category label positioned at the top of each quadrant */}
+                <div className={`category-section ${category.key}`}>
+                  <h3 className="category-title">
+                    {category.label}
+                  </h3>
                 </div>
-              ) : (
-                categoryPortions.map((portion) => (
-                  <button
-                    key={portion.id}
-                    onClick={() => onRemovePortion(portion.id)}
-                    className={`portion-added ${portion.category}-portion`}
-                    title={`Remove ${SHAPE_LABELS[portion.shape]}`}
-                  >
-                    <PortionIcon shape={portion.shape} size="sm" className="text-white" />
-                    <span className="portion-added-label">{SHAPE_LABELS[portion.shape]}</span>
-                  </button>
-                ))
-              )}
-            </div>
-          </div>
-        );
-      })}
+                
+                {/* Portion container */}
+                <div className="portion-container">
+                  {categoryPortions.length === 0 ? (
+                    <div className="empty-state">
+                      Add portions here
+                    </div>
+                  ) : (
+                    categoryPortions.map((portion) => (
+                      <button
+                        key={portion.id}
+                        onClick={() => onRemovePortion(portion.id)}
+                        className={`portion-added portion-${portion.category}`}
+                        title={`Remove ${SHAPE_LABELS[portion.shape]}`}
+                      >
+                        <PortionIcon shape={portion.shape} size="sm" className="text-white" />
+                        <span className="portion-added-label">{SHAPE_LABELS[portion.shape]}</span>
+                      </button>
+                    ))
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };
