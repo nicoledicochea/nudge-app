@@ -1,10 +1,10 @@
 import React from 'react';
 import usePlateState from '@/hooks/usePlateState';
-import useAIFeedback from '@/hooks/useAIFeedback';
+import { useAIFeedback } from '@/hooks/useAIFeedback';
 import PortionShapeGallery from '@/components/PortionShapeGallery';
 import CategorySelectionModal from '@/components/CategorySelectionModal';
 import PlateVisualization from '@/components/PlateVisualization';
-import AIFeedbackBox from '@/components/AIFeedbackBox';
+import { AIFeedbackBox } from '@/components/AIFeedbackBox';
 import SaveMealButton from '@/components/SaveMealButton';
 import '../styles/VisualPlateLogger.css';
 
@@ -20,7 +20,7 @@ const VisualPlateLogger: React.FC = () => {
   } = usePlateState();
 
   const {
-    aiFeedback,
+    feedback,
     isLoading,
     generateFeedback,
   } = useAIFeedback();
@@ -73,7 +73,7 @@ const VisualPlateLogger: React.FC = () => {
       {/* AI Feedback */}
       <div className="section">
         <AIFeedbackBox 
-          feedback={aiFeedback}
+          feedback={feedback}
           isLoading={isLoading}
         />
       </div>

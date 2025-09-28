@@ -1,13 +1,19 @@
+// src/components/AIFeedbackBox.tsx
 import React from 'react';
-import { Sparkles, Loader2 } from 'lucide-react';
+import { AIFeedbackResponse } from '../types/ai';
 import '../styles/AIFeedbackBox.css';
+import { Loader2, Sparkles } from 'lucide-react';
 
 interface AIFeedbackBoxProps {
-  feedback: string;
+  feedback: AIFeedbackResponse | null;
   isLoading: boolean;
 }
 
-const AIFeedbackBox: React.FC<AIFeedbackBoxProps> = ({ feedback, isLoading }) => {
+export const AIFeedbackBox: React.FC<AIFeedbackBoxProps> = ({ 
+  feedback,
+  isLoading,
+}) => {
+
   return (
     <div 
       data-testid="ai-feedback-box"
@@ -27,11 +33,9 @@ const AIFeedbackBox: React.FC<AIFeedbackBoxProps> = ({ feedback, isLoading }) =>
             <span>Generating feedback...</span>
           </div>
         ) : (
-          <p>{feedback}</p>
+          <p>{feedback?.feedback}</p> 
         )}
       </div>
     </div>
   );
 };
-
-export default AIFeedbackBox;
