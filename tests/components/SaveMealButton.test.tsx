@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import SaveMealButton from '@/components/SaveMealButton';
+import SaveMealButton from '../../src/components/SaveMealButton';
 
 describe('SaveMealButton', () => {
   const mockOnSave = vi.fn();
@@ -41,6 +41,6 @@ describe('SaveMealButton', () => {
     render(<SaveMealButton onSave={mockOnSave} disabled={false} isLoading={false} />);
     
     const button = screen.getByRole('button');
-    expect(button).toHaveClass('bg-teal-500', 'hover:bg-teal-600');
+    expect(button).toHaveClass('save-meal-button');
   });
 });

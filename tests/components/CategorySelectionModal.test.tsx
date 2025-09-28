@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import CategorySelectionModal from '@/components/CategorySelectionModal';
-import { PortionShape } from '@/types/portion';
+import CategorySelectionModal from '../../src/components/CategorySelectionModal';
+import { PortionShape } from '../../src/types/portion';
 
 describe('CategorySelectionModal', () => {
   const mockOnSelectCategory = vi.fn();
@@ -78,7 +78,7 @@ describe('CategorySelectionModal', () => {
     );
     
     const modal = screen.getByRole('dialog');
-    expect(modal).toHaveAttribute('aria-labelledby');
+    expect(modal).toHaveAttribute('aria-labelledby', 'modal-title');
     expect(modal).toHaveAttribute('aria-modal', 'true');
   });
 });

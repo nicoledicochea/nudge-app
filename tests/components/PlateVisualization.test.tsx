@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import PlateVisualization from '@/components/PlateVisualization';
-import { PortionData } from '@/types/portion';
+import PlateVisualization from '../../src/components/PlateVisualization';
+import { PortionData } from '../../src/types/portion';
 
 describe('PlateVisualization', () => {
   const mockOnRemovePortion = vi.fn();
@@ -66,7 +66,7 @@ describe('PlateVisualization', () => {
     render(<PlateVisualization portions={[]} onRemovePortion={mockOnRemovePortion} />);
     
     const proteinSection = screen.getByTestId('protein-section');
-    expect(proteinSection).toHaveClass('plate-section');
+    expect(proteinSection).toHaveClass('plate-section', 'protein-section');
   });
 
   it('shows empty state when no portions are added', () => {

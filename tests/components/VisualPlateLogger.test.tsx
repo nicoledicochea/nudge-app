@@ -1,10 +1,11 @@
+import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import VisualPlateLogger from '@/components/VisualPlateLogger';
+import VisualPlateLogger from '../../src/components/VisualPlateLogger';
 
 // Mock the hooks
-vi.mock('@/hooks/usePlateState', () => ({
-  usePlateState: () => ({
+vi.mock('../../src/hooks/usePlateState', () => ({
+  default: () => ({
     portions: [],
     selectedShape: null,
     showCategoryModal: false,
@@ -15,9 +16,9 @@ vi.mock('@/hooks/usePlateState', () => ({
   }),
 }));
 
-vi.mock('@/hooks/useAIFeedback', () => ({
+vi.mock('../../src/hooks/useAIFeedback', () => ({
   useAIFeedback: () => ({
-    aiFeedback: 'Add some portion blocks to your plate to get personalized feedback!',
+    feedback: { feedback: 'Add some portion blocks to your plate to get personalized feedback!' },
     isLoading: false,
     generateFeedback: vi.fn(),
   }),
@@ -76,6 +77,6 @@ describe('VisualPlateLogger', () => {
     render(<VisualPlateLogger />);
     
     const mainContainer = screen.getByTestId('visual-plate-logger');
-    expect(mainContainer).toHaveClass('min-h-screen', 'p-4');
+    expect(mainContainer).toHaveClass('visual-plate-logger');
   });
 });

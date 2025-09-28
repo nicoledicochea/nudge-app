@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import usePlateState from '@/hooks/usePlateState';
-import { PortionShape, FoodCategory } from '@/types/portion';
+import usePlateState from '../../src/hooks/usePlateState';
+import { PortionShape, FoodCategory } from '../../src/types/portion';
 
 describe('usePlateState', () => {
   it('initializes with empty state', () => {
