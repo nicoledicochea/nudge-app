@@ -1,0 +1,92 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 50;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 24rem;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.modal-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #000000;
+}
+
+.close-button {
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.close-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #555555;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.category-button {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  color: #000000;
+  font-weight: 500;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.category-button:hover {
+  transform: scale(1.05);
+}
+
+/* Category button colors */
+.protein-button {
+  background-color: #D88A8A;
+}
+
+.carb-button {
+  background-color: #F1C77F;
+}
+
+.veggie-button {
+  background-color: #B1C9A9;
+}
+
+.fat-button {
+  background-color: #AAD0DD;
+}
+
+.instructions {
+  font-size: 0.875rem;
+  color: #555555;
+  margin-top: 1rem;
+  text-align: center;
+}

@@ -1,0 +1,36 @@
+.visual-plate-logger {
+  min-height: 100vh;
+  background-color: #ffffff;
+  padding: 1rem;
+  width: 100%;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 0.5rem;
+}
+
+.date {
+  color: #555555;
+  font-size: 0.875rem;
+}
+
+.section {
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #000000;
+  margin-bottom: 0.75rem;
+}
