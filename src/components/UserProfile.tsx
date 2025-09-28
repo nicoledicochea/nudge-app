@@ -11,7 +11,11 @@ interface UserProfileData {
   created_at: string;
 }
 
-export const UserProfile: React.FC = () => {
+interface UserProfileProps {
+  onNavigate?: (page: string) => void;
+}
+
+export const UserProfile: React.FC<UserProfileProps> = ({ onNavigate }) => {
   const { user, signOut, getIdToken } = useAuth();
   const [profile, setProfile] = useState<UserProfileData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -90,36 +94,36 @@ export const UserProfile: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '32px' }}>
+        <div>Loading...</div>
       </div>
     );
   }
 
   if (!profile) {
     return (
-      <div className="text-center p-8">
-        <p className="text-gray-600">Unable to load profile</p>
+      <div style={{ textAlign: 'center', padding: '32px' }}>
+        <p>Unable to load profile</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Profile</h2>
+    <div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
+        <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#1f2937' }}>Profile</h2>
       </div>
 
-      <div className="space-y-4">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '4px' }}>
             Email
           </label>
-          <p className="text-gray-900">{profile.email}</p>
+          <p>{profile.email}</p>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '4px' }}>
             Name
           </label>
           {editing ? (
@@ -127,22 +131,22 @@ export const UserProfile: React.FC = () => {
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              style={{ width: '100%', padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: '6px', outline: 'none' }}
             />
           ) : (
-            <p className="text-gray-900">{profile.name || 'Not set'}</p>
+            <p>{profile.name || 'Not set'}</p>
           )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '4px' }}>
             Goal
           </label>
           {editing ? (
             <select
               value={formData.goal}
               onChange={(e) => setFormData({ ...formData, goal: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              style={{ width: '100%', padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: '6px', outline: 'none' }}
             >
               <option value="">Select a goal</option>
               <option value="general_wellness">General Wellness</option>
@@ -150,19 +154,19 @@ export const UserProfile: React.FC = () => {
               <option value="bariatric_support">Bariatric Support</option>
             </select>
           ) : (
-            <p className="text-gray-900">{profile.goal || 'Not set'}</p>
+            <p>{profile.goal || 'Not set'}</p>
           )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '4px' }}>
             Bariatric Stage
           </label>
           {editing ? (
             <select
               value={formData.bariatric_stage}
               onChange={(e) => setFormData({ ...formData, bariatric_stage: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              style={{ width: '100%', padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: '6px', outline: 'none' }}
             >
               <option value="">Not applicable</option>
               <option value="pre_op">Pre-operative</option>
@@ -171,22 +175,22 @@ export const UserProfile: React.FC = () => {
               <option value="maintenance">Maintenance</option>
             </select>
           ) : (
-            <p className="text-gray-900">{profile.bariatric_stage || 'Not applicable'}</p>
+            <p>{profile.bariatric_stage || 'Not applicable'}</p>
           )}
         </div>
 
-        <div className="pt-4 space-y-3">
+        <div style={{ paddingTop: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {editing ? (
-            <div className="flex space-x-2">
+            <div style={{ display: 'flex', gap: '8px' }}>
               <button
                 onClick={handleSave}
-                className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                style={{ flex: 1, backgroundColor: '#2563eb', color: 'white', padding: '8px 16px', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
               >
                 Save
               </button>
               <button
                 onClick={() => setEditing(false)}
-                className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                style={{ flex: 1, backgroundColor: '#d1d5db', color: '#374151', padding: '8px 16px', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
               >
                 Cancel
               </button>
@@ -194,7 +198,7 @@ export const UserProfile: React.FC = () => {
           ) : (
             <button
               onClick={() => setEditing(true)}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              style={{ width: '100%', backgroundColor: '#2563eb', color: 'white', padding: '8px 16px', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
             >
               Edit Profile
             </button>
@@ -202,7 +206,7 @@ export const UserProfile: React.FC = () => {
           
           <button
             onClick={handleSignOut}
-            className="w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+            style={{ width: '100%', backgroundColor: '#dc2626', color: 'white', padding: '8px 16px', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
           >
             Sign Out
           </button>

@@ -8,7 +8,7 @@
 
 ### Features
 
-- [ ] **User Authentication & Onboarding** - JWT-based auth with gentle onboarding flow `[M]`
+- [x] **User Authentication & Onboarding** - Firebase auth with Google OAuth and gentle onboarding flow `[M]`
 - [ ] **Basic AI Chat Interface** - Gemini Pro integration with gentle personality `[M]`
 - [ ] **Visual Plate Logger** - 12 universal portion shapes with single meal logging per session `[L]`
 - [ ] **Simple Wellness Check-ins** - Mood, energy, stress level tracking `[S]`
