@@ -6,8 +6,13 @@ const createTables = async () => {
     await db.query(`
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
+        firebase_uid VARCHAR(255) UNIQUE,
         email VARCHAR(255) UNIQUE,
         password_hash VARCHAR(255),
+        name VARCHAR(255),
+        photo_url TEXT,
+        goal VARCHAR(255),
+        bariatric_stage VARCHAR(100),
         profile JSONB DEFAULT '{}',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
