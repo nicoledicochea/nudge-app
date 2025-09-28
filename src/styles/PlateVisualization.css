@@ -1,0 +1,88 @@
+.plate-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.category-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.category-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #000000;
+}
+
+.plate-section {
+  border-radius: 0.5rem;
+  min-height: 120px;
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Category background colors */
+.protein-section {
+  background-color: #D88A8A;
+}
+
+.veggie-section {
+  background-color: #B1C9A9;
+}
+
+.carb-section {
+  background-color: #F1C77F;
+}
+
+.fat-section {
+  background-color: #AAD0DD;
+}
+
+.empty-state {
+  color: #555555;
+  font-size: 0.875rem;
+  font-style: italic;
+  align-self: center;
+}
+
+.portion-added {
+  min-width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 500;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  border: none;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.portion-added:hover {
+  transform: scale(1.05);
+}
+
+/* Portion colors by category */
+.protein-portion {
+  background-color: #BF5E5E;
+}
+
+.veggie-portion {
+  background-color: #7B9B5B;
+}
+
+.carb-portion {
+  background-color: #D9B458;
+}
+
+.fat-portion {
+  background-color: #7AA7BE;
+}
