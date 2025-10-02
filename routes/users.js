@@ -3,38 +3,34 @@ const { query } = require('../services/database');
 const { authMiddleware } = require('../middleware/auth');
 const router = express.Router();
 
-// Get user profile
+// Get current user profile
 router.get('/profile', authMiddleware, async (req, res) => {
   try {
-    const userId = req.user.userId;
+    if (!req.user) {
+      return res.status(401).json({ error: 'Authentication required' });
+    }
 
-    const result = await query(
-      'SELECT id, email, name, created_at FROM users WHERE id = $1',
-      [userId]
-    );
-
-    if (result.rows.length === 0) {
+    const user = await query('SELECT * FROM users WHERE id = $1', [req.user.userId]);
+    
+    if (user.rows.length === 0) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    const user = result.rows[0];
-
-    // Get user stats
-    const [mealCount, checkinCount] = await Promise.all([
-      query('SELECT COUNT(*) as count FROM meal_logs WHERE user_id = $1', [userId]),
-      query('SELECT COUNT(*) as count FROM check_ins WHERE user_id = $1', [userId])
-    ]);
-
+    const userData = user.rows[0];
     res.json({
-      user,
-      stats: {
-        total_meals_logged: parseInt(mealCount.rows[0].count),
-        total_checkins: parseInt(checkinCount.rows[0].count)
+      user: {
+        id: userData.id,
+        email: userData.email,
+        name: userData.name,
+        photo_url: userData.photo_url,
+        goal: userData.goal,
+        bariatric_stage: userData.bariatric_stage,
+        created_at: userData.created_at
       }
     });
 
   } catch (error) {
-    console.error('Error fetching user profile:', error);
+    console.error('Profile error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -42,29 +38,41 @@ router.get('/profile', authMiddleware, async (req, res) => {
 // Update user profile
 router.put('/profile', authMiddleware, async (req, res) => {
   try {
-    const userId = req.user.userId;
-    const { name } = req.body;
-
-    if (!name) {
-      return res.status(400).json({ error: 'Name is required' });
+    if (!req.user) {
+      return res.status(401).json({ error: 'Authentication required' });
     }
 
+    const { name, goal, bariatric_stage } = req.body;
+    
+    // Convert empty strings to null to satisfy check constraints
+    const goalValue = goal === '' ? null : goal;
+    const bariatricStageValue = bariatric_stage === '' ? null : bariatric_stage;
+    
     const result = await query(
-      'UPDATE users SET name = $1 WHERE id = $2 RETURNING id, email, name, created_at',
-      [name, userId]
+      'UPDATE users SET name = $1, goal = $2, bariatric_stage = $3, updated_at = NOW() WHERE id = $4 RETURNING *',
+      [name, goalValue, bariatricStageValue, req.user.userId]
     );
 
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'User not found' });
     }
 
+    const userData = result.rows[0];
     res.json({
       message: 'Profile updated successfully',
-      user: result.rows[0]
+      user: {
+        id: userData.id,
+        email: userData.email,
+        name: userData.name,
+        photo_url: userData.photo_url,
+        goal: userData.goal,
+        bariatric_stage: userData.bariatric_stage,
+        updated_at: userData.updated_at
+      }
     });
 
   } catch (error) {
-    console.error('Error updating user profile:', error);
+    console.error('Profile update error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

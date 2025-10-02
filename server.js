@@ -47,7 +47,6 @@ initializeServices();
 // app.locals.vectorDB = vectorDB;
 
 // Add after your middleware section
-app.use('/api/auth', require('./routes/auth'));
 app.use('/api/meals', require('./routes/meals'));
 app.use('/api/checkins', require('./routes/checkins'));
 app.use('/api/users', require('./routes/users'));

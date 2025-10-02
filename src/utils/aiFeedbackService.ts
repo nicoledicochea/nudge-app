@@ -1,6 +1,7 @@
 import { PortionData } from '@/types/portion';
 import { analyzeMeal, MealAnalysis } from './mealAnalysis';
 import { useState, useEffect } from 'react';
+import { firebaseAuthService } from '@/services/firebaseAuth';
 
 export interface AIFeedbackRequest {
   portions: PortionData[];
@@ -108,26 +109,30 @@ ${JSON.stringify(context, null, 2)}
 Respond with gentle, personalized feedback based on this context.`;
 
   // Make your API call here - replace with your actual implementation
+  const token = await getAuthToken();
   const response = await fetch('/api/chat', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${getAuthToken()}`, // Your auth implementation
+      'Authorization': `Bearer ${token}`,
     },
     body: JSON.stringify({
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: 'Please provide gentle feedback for this meal.' }
-      ],
-      context: context // Pass RAG context
+      message: systemPrompt
     })
   });
   
   if (!response.ok) {
-    throw new Error(`AI API failed: ${response.status}`);
+    const errorData = await response.json().catch(() => ({}));
+    console.error('AI API Error Details:', {
+      status: response.status,
+      statusText: response.statusText,
+      error: errorData
+    });
+    throw new Error(`AI API failed: ${response.status} - ${errorData.error || errorData.details || response.statusText}`);
   }
-  
+
   const data = await response.json();
+  console.log('AI API Response:', data);
   return data.message || data.response || '';
 };
 
@@ -183,11 +188,11 @@ const getCurrentTimeOfDay = (): string => {
 };
 
 /**
- * Get auth token - replace with your implementation
+ * Get auth token from Firebase
  */
-const getAuthToken = (): string => {
-  // Replace with your actual auth token retrieval
-  return localStorage.getItem('authToken') || '';
+const getAuthToken = async (): Promise<string> => {
+  const token = await firebaseAuthService.getIdToken();
+  return token || '';
 };
 
 // Real-time feedback hook for React components

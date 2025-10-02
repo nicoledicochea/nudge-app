@@ -1,9 +1,6 @@
 const express = require('express');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { authMiddleware } = require('../middleware/auth');
 const router = express.Router();
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 router.post('/', authMiddleware, async (req, res) => {
   try {
@@ -13,9 +10,6 @@ router.post('/', authMiddleware, async (req, res) => {
     if (!message) {
       return res.status(400).json({ error: 'Message is required' });
     }
-
-    // Get the generative model
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
     // Create a gentle, encouraging system prompt for the nutrition coach
     const systemPrompt = `You are a supportive and encouraging nutrition coach for the Nudge app.
@@ -32,9 +26,32 @@ router.post('/', authMiddleware, async (req, res) => {
 
     User message: ${message}`;
 
-    const result = await model.generateContent(systemPrompt);
-    const response = await result.response;
-    const text = response.text();
+    // Call Gemini API directly via REST
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: systemPrompt
+            }]
+          }]
+        })
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Gemini API error:', errorData);
+      throw new Error(`Gemini API failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response generated';
 
     res.json({
       message: text,
@@ -50,7 +67,8 @@ router.post('/', authMiddleware, async (req, res) => {
     }
 
     res.status(500).json({
-      error: 'Sorry, I had trouble processing that. Please try again.'
+      error: 'Sorry, I had trouble processing that. Please try again.',
+      details: error.message
     });
   }
 });
